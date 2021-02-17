@@ -19,7 +19,7 @@ export const ExternalApi = () => {
       const responseData = await response.json();
       console.log(responseData,'the msg is here ist the response')
 
-      setMessage(responseData.message);
+      setMessage(responseData.msg);
     } catch (error) {
       setMessage(error.message);
     }
@@ -41,7 +41,7 @@ export const ExternalApi = () => {
       const responseData = await response.json();
       console.log(responseData,'the msg the private route')
 
-      setMessage(responseData.message);
+      setMessage(responseData.msg);
     } catch (error) {
       setMessage(error.message);
     }
