@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 
 import { NavBar, Footer, Loading } from "./components";
 import { Home, Profile, ExternalApi } from "./views";
-import ProtectedRoute from "./auth/protected-route";
+import ProtectedRoute from "./components/protected-route";
 
 import "./app.css";
 import { useAuth0 } from "@auth0/auth0-react";
