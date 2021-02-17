@@ -17,6 +17,7 @@ export const ExternalApi = () => {
       const response = await fetch(`${serverUrl}/api/messages/public-message`);
 
       const responseData = await response.json();
+      console.log(responseData,'the msg is here ist the response')
 
       setMessage(responseData.message);
     } catch (error) {
@@ -29,7 +30,7 @@ export const ExternalApi = () => {
       const token = await getAccessTokenSilently();
 
       const response = await fetch(
-        `${serverUrl}/api/messages/protected-message`,
+        `${serverUrl}/api/messages/private-message`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,13 +39,14 @@ export const ExternalApi = () => {
       );
 
       const responseData = await response.json();
+      console.log(responseData,'the msg the private route')
 
       setMessage(responseData.message);
     } catch (error) {
       setMessage(error.message);
     }
   };
-
+  console.log(message, ': message in state')
   return (
     <Container className="mb-5">
       <h1>External API</h1>

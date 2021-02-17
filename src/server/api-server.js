@@ -21,6 +21,8 @@ const audience = process.env.AUTH0_AUDIENCE;
 const port = process.env.SERVER_PORT;
 const appOrigin = process.env.CLIENT_ORIGIN_URL;
 const issuer = process.env.AUTH0_DOMAIN;
+console.log(issuer, 'issuer')
+console.log(appOrigin, 'issuer')
 
 
 if (!issuer || !audience) {
@@ -54,6 +56,7 @@ app.get(`/api/messages/public-message`, (req, res) => {
 });
 
 app.get("/api/messages/private-message", checkJwt, (req, res) => {
+  console.log('reached private route')
   res.send({
     msg: "The API successfully validated your access token.",
   });
