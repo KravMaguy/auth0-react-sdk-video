@@ -4,6 +4,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "./logout-button";
 import LoginButton from "./login-button";
+import AuthNav from "./auth-nav";
 
 const MainNav = () => (
   <Nav className="mr-auto">
@@ -34,14 +35,14 @@ const MainNav = () => (
   </Nav>
 );
 
-const AuthNav = () => {
-  const { isAuthenticated } = useAuth0();
-  return (
-    <Nav className="justify-content-end">
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-    </Nav>
-  );
-};
+// const AuthNav = () => {
+//   const { isAuthenticated } = useAuth0();
+//   return (
+//     <Nav className="justify-content-end">
+//       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+//     </Nav>
+//   );
+// };
 
 const NavBar = () => {
   return (
