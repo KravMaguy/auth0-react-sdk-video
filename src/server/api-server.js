@@ -6,16 +6,22 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const { resolve } = require("path");
 
-require("dotenv").config({
-  path: resolve(process.cwd(), "src", "server", ".env"),
-});
+// require("dotenv").config({
+//   path: resolve(process.cwd(), "src", "server", ".env"),
+// });
+require("dotenv").config();
 
 const app = express();
 
-const port = process.env.API_PORT;
-const appOrigin = process.env.APP_ORIGIN;
+// const port = process.env.API_PORT;
+// const appOrigin = process.env.APP_ORIGIN;
+// const audience = process.env.AUTH0_AUDIENCE;
+// const issuer = process.env.AUTH0_ISSUER;
 const audience = process.env.AUTH0_AUDIENCE;
-const issuer = process.env.AUTH0_ISSUER;
+const port = process.env.SERVER_PORT;
+const appOrigin = process.env.CLIENT_ORIGIN_URL;
+const issuer = process.env.AUTH0_DOMAIN;
+
 
 if (!issuer || !audience) {
   throw new Error("Please make sure that .env is in place and populated");
@@ -37,14 +43,17 @@ const checkJwt = jwt({
   issuer: issuer,
   algorithms: ["RS256"],
 });
-
-app.get("/api/public-message", (req, res) => {
+app.get('/test', (req,res)=>{
+  res.json({msg:'test'})
+})
+app.get(`/api/messages/public-message`, (req, res) => {
+  console.log('reached here')
   res.send({
     msg: "The API doesn't require an access token to share this message.",
   });
 });
 
-app.get("/api/private-message", checkJwt, (req, res) => {
+app.get("/api/messages/private-message", checkJwt, (req, res) => {
   res.send({
     msg: "The API successfully validated your access token.",
   });
