@@ -1,11 +1,11 @@
 // src/views/profile.js
 
 import React from "react";
-import {Container, Row, Col} from "react-bootstrap";
-import {Highlight} from '../components'
+// import {Container, Row, Col} from "react-bootstrap";
+// import {Highlight} from '../components'
 import { useAuth0 } from "@auth0/auth0-react";
-import { Loading } from "../components";
-
+// import { Loading } from "../components";
+import UserTodos from "../components/user-todos"
 const Profile = () => {
   const { user } = useAuth0();
   const { name, picture, email } = user;
@@ -30,8 +30,14 @@ const Profile = () => {
           {JSON.stringify(user, null, 2)}
         </pre>
       </div>
+
+      <div className="row">
+        <div className="col-md text-center">
+          <UserTodos/>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Profile
+export default Profile;
