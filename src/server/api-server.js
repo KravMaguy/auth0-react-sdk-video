@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
-const { resolve } = require("path");
+// const { resolve } = require("path");
 
 // require("dotenv").config({
 //   path: resolve(process.cwd(), "src", "server", ".env"),
@@ -13,10 +13,6 @@ require("dotenv").config();
 
 const app = express();
 
-// const port = process.env.API_PORT;
-// const appOrigin = process.env.APP_ORIGIN;
-// const audience = process.env.AUTH0_AUDIENCE;
-// const issuer = process.env.AUTH0_ISSUER;
 const audience = process.env.AUTH0_AUDIENCE;
 const port = process.env.SERVER_PORT;
 const appOrigin = process.env.CLIENT_ORIGIN_URL;
@@ -62,4 +58,10 @@ app.get("/api/messages/private-message", checkJwt, (req, res) => {
   });
 });
 
+app.get("/profile/:email", (req, res)=>{
+  const email=req.params.email
+  console.log('get request on route profile the email: ', email)
+  res.json({'client email': email})
+
+})
 app.listen(port, () => console.log(`API Server listening on port ${port}`));

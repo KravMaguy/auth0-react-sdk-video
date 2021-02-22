@@ -4,10 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import {
   Form,
-  FormControl,
   Button,
-  Container,
-  Row,
   Col,
 } from "react-bootstrap";
 
@@ -27,6 +24,21 @@ export default class UserTodos extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
   }
+
+  componentDidMount(){
+    console.log('todos did mount')
+    console.log(this.props.user.email, 'the props email')
+    fetch(`http://localhost:6060/profile/${this.props.user.email}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(email=>console.log(email))
+      
+  }
+
   addItem(e) {
     e.preventDefault();
     const newItem = this.state.currentItem;
@@ -61,7 +73,9 @@ export default class UserTodos extends React.Component {
     items.map((item) => {
       if (item.key === key) {
         console.log(item.key + "    " + key);
-        item.text = text;
+        return item.text = text;
+      } else {
+        return null
       }
     });
     this.setState({

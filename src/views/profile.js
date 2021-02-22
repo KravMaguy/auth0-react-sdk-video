@@ -33,7 +33,7 @@ const Profile = () => {
 
       <div className="row">
         <div className="col-md text-center">
-          <UserTodos/>
+          <UserTodos someProp="im some prop" user={user}/>
         </div>
       </div>
     </div>
