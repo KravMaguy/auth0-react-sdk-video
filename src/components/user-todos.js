@@ -2,17 +2,14 @@ import React from "react";
 import ListItems from "./list-items";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import {
-  Form,
-  Button,
-  Col,
-} from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 
 library.add(faTrash);
 export default class UserTodos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      credentials: [],
       items: [],
       currentItem: {
         text: "",
@@ -24,23 +21,78 @@ export default class UserTodos extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
   }
+  // persist = (newTodos) => {
+  //   fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Basic ${credentials.username}:${credentials.password}`,
+  //     },
+  //     body: JSON.stringify(newTodos),
+  //   }).then(() => {});
+  // };
+  handleErrors = async (response) => {
+    console.log("handleErrors called");
+    console.log("response in handleErrors", response);
+    if (!response.ok) {
+      const { message } = await response.json();
+      throw Error(message);
+    }
+    return response.json();
+  };
 
-  componentDidMount(){
-    console.log('todos did mount')
-    console.log(this.props.user.email, 'the props email')
-    fetch(`http://localhost:6060/profile/${this.props.user.email}`, {
-      method: "GET",
+  componentDidMount() {
+    console.log("todos did mount");
+    const { sub, email } = this.props.user;
+    console.log(sub, email);
+    let subNum = sub.slice(sub.indexOf("|") + 1);
+    console.log(subNum, "subnum");
+    console.log(this.props.user);
+    let username = email;
+    let password = subNum;
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/register`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
     })
-      .then((response) => response.json())
-      .then(email=>console.log(email))
-      
+      // .then(this.handleErrors)
+      .then((res) => res.json())
+      .then((res) => console.log(res, "res"))
+      .then(() => {
+        this.setState({
+          username,
+          password,
+        });
+      })
+      .then(() => {
+        console.log("then username:", username);
+        console.log("then password:", password);
+
+        fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${username}:${password}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((todos) => console.log(todos, ": todos"));
+      })
+      .catch((error) => {
+        console.log("catch in componentdidmount");
+        console.log(error.message, error.user);
+      });
   }
 
   addItem(e) {
     e.preventDefault();
+    console.log("this.state items: ", this.state.items);
     const newItem = this.state.currentItem;
     if (newItem.text !== "") {
       const items = [...this.state.items, newItem];
@@ -73,9 +125,9 @@ export default class UserTodos extends React.Component {
     items.map((item) => {
       if (item.key === key) {
         console.log(item.key + "    " + key);
-        return item.text = text;
+        return (item.text = text);
       } else {
-        return null
+        return null;
       }
     });
     this.setState({
@@ -97,7 +149,9 @@ export default class UserTodos extends React.Component {
                 ></Form.Control>
               </Col>
               <Col sm={2} xs="12" className="my-1">
-                <Button className="btn btn-full-width" type="submit">Submit</Button>
+                <Button className="btn btn-full-width" type="submit">
+                  Submit
+                </Button>
               </Col>
             </Form.Row>
           </Form>
