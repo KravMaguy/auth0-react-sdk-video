@@ -149,7 +149,7 @@ export default class UserTodos extends React.Component {
     items.map((item) => {
       if (item.id === id) {
         // console.log(item.id + "    " + id);
-        return (item.text = text);
+        return (item.text = text, item.isUpdated=true);
       } else {
         return null;
       }

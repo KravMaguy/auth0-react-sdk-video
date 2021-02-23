@@ -37,6 +37,15 @@ function ListItems(props) {
                 icon="times"
               />
             </Col>
+            {item.isUpdated&&(
+              <FontAwesomeIcon
+                className="faicons"
+                onClick={() => {
+                  console.log(item.id+' was checked')
+                  }}
+                  icon="check"
+              />
+            )}
           </Form.Row>
       </div>
     );
