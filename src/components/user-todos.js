@@ -13,7 +13,7 @@ export default class UserTodos extends React.Component {
       items: [],
       currentItem: {
         text: "",
-        key: "",
+        id: "",
       },
     };
     this.addItem = this.addItem.bind(this);
@@ -93,7 +93,8 @@ export default class UserTodos extends React.Component {
           },
         })
           .then((response) => response.json())
-          .then((todos) => console.log(todos, ": todos"));
+          .then((todos)=>this.setState({items:todos}))
+          .then((todos) => console.log(todos, ": todos"))
       })
       .catch((error) => {
         console.log("catch in componentdidmount");
@@ -111,7 +112,7 @@ export default class UserTodos extends React.Component {
         items: items,
         currentItem: {
           text: "",
-          key: "",
+          id: "",
         },
       });
       //post to add todo route
@@ -122,24 +123,24 @@ export default class UserTodos extends React.Component {
     this.setState({
       currentItem: {
         text: e.target.value,
-        key: Date.now(),
+        id: Date.now(),
       },
     });
   }
-  deleteItem(key) {
-    const filteredItems = this.state.items.filter((item) => item.key !== key);
+  deleteItem(id) {
+    const filteredItems = this.state.items.filter((item) => item.id !== id);
     this.setState({
       items: filteredItems,
     });
     this.UpdateDb(filteredItems)
     //post to add todo route
   }
-  setUpdate(text, key) {
+  setUpdate(text, id) {
     console.log("items:" + this.state.items);
     const items = this.state.items;
     items.map((item) => {
-      if (item.key === key) {
-        console.log(item.key + "    " + key);
+      if (item.id === id) {
+        console.log(item.id + "    " + id);
         return (item.text = text);
       } else {
         return null;

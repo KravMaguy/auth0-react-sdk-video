@@ -77,7 +77,7 @@ const todosSchema = new mongoose.Schema({
   userId: mongoose.Schema.ObjectId,
   todos: [
     {
-      checked: Boolean,
+      // checked: Boolean,
       text: String,
       id: String,
     },

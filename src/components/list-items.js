@@ -14,17 +14,17 @@ function ListItems(props) {
   const items = props.items;
   const listItems = items.map((item) => {
     return (
-      <div className="" key={item.key}>
+      <div className="" key={item.id}>
           <Form.Row className="align-items-center">
             <Col sm={8} xs="auto" className="my-1">
               <Form.Control
                 type="text"
-                id={item.key}
+                id={item.id}
                 value={item.text}
                 onChange={(e) => {
                   //you will have to update this specific todo
                   console.log('setUpdate called')
-                  props.setUpdate(e.target.value, item.key);
+                  props.setUpdate(e.target.value, item.id);
                 }}
               />
             </Col>
@@ -32,7 +32,7 @@ function ListItems(props) {
               <FontAwesomeIcon
                 className="faicons"
                 onClick={() => {
-                  props.deleteItem(item.key);
+                  props.deleteItem(item.id);
                 }}
                 icon="trash"
               />
