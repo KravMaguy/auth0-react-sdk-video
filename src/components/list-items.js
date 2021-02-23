@@ -16,7 +16,7 @@ function ListItems(props) {
     return (
       <div className="" key={item.id}>
           <Form.Row className="align-items-center">
-            <Col sm={8} xs="auto" className="my-1">
+            <Col sm={8} xs={8} className="my-1">
               <Form.Control
                 type="text"
                 id={item.id}
@@ -28,24 +28,29 @@ function ListItems(props) {
                 }}
               />
             </Col>
-            <Col sm={1} xs="auto" className="my-1">
+            <Col sm={1} xs={2} className="my-1">
+              <Button onClick={() => {
+                  props.deleteItem(item.id);
+                }}>
               <FontAwesomeIcon
                 className="faicons"
-                onClick={() => {
-                  props.deleteItem(item.id);
-                }}
                 icon="times"
               />
+              </Button>
             </Col>
-            {item.isUpdated&&(
-              <FontAwesomeIcon
-                className="faicons"
-                onClick={() => {
+            <Col sm={1} xs={2} className="my-1">
+              {item.isUpdated&&(
+                <Button onClick={() => {
                   console.log(item.id+' was checked')
-                  }}
+                  props.updateItem(item);
+                  }}>
+                <FontAwesomeIcon
+                  className="faicons"
                   icon="check"
-              />
-            )}
+                />
+                </Button>
+              )}
+            </Col>
           </Form.Row>
       </div>
     );

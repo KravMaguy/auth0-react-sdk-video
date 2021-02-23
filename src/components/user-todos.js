@@ -158,6 +158,24 @@ export default class UserTodos extends React.Component {
       items: items,
     });
   }
+
+  updateItem=(item)=>{
+    console.log('update item')
+    console.log(item)
+    const items = this.state.items;
+    items.map((x) => {
+      if (x.id === item.id) {
+        // console.log(item.id + "    " + id);
+        return (x.isUpdated=false);
+      } else {
+        return null;
+      }
+    });
+    this.setState({
+      items: items,
+    });
+    this.UpdateDb([...this.state.items])
+  }
   render() {
     return (
       <div className="App">
@@ -185,6 +203,7 @@ export default class UserTodos extends React.Component {
             items={this.state.items}
             deleteItem={this.deleteItem}
             setUpdate={this.setUpdate}
+            updateItem={this.updateItem}
           />
         </div>
       </div>
