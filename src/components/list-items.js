@@ -22,6 +22,8 @@ function ListItems(props) {
                 id={item.key}
                 value={item.text}
                 onChange={(e) => {
+                  //you will have to update this specific todo
+                  console.log('setUpdate called')
                   props.setUpdate(e.target.value, item.key);
                 }}
               />

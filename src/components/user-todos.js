@@ -41,6 +41,17 @@ export default class UserTodos extends React.Component {
     return response.json();
   };
 
+  UpdateDb=(newTodos)=>{
+    fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${this.state.username}:${this.state.password}`,
+      },
+      body: JSON.stringify(newTodos),
+    }).then(() => {});
+  }
+
   componentDidMount() {
     console.log("todos did mount");
     const { sub, email } = this.props.user;
@@ -103,6 +114,8 @@ export default class UserTodos extends React.Component {
           key: "",
         },
       });
+      //post to add todo route
+      this.UpdateDb(items)
     }
   }
   handleInput(e) {
@@ -118,6 +131,8 @@ export default class UserTodos extends React.Component {
     this.setState({
       items: filteredItems,
     });
+    this.UpdateDb(filteredItems)
+    //post to add todo route
   }
   setUpdate(text, key) {
     console.log("items:" + this.state.items);
