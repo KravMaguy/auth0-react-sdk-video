@@ -34,7 +34,7 @@ function ListItems(props) {
                 onClick={() => {
                   props.deleteItem(item.id);
                 }}
-                icon="trash"
+                icon="times"
               />
             </Col>
           </Form.Row>

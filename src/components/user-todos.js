@@ -1,10 +1,10 @@
 import React from "react";
 import ListItems from "./list-items";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Col } from "react-bootstrap";
 
-library.add(faTrash);
+library.add(faTimes, faCheck);
 export default class UserTodos extends React.Component {
   constructor(props) {
     super(props);
@@ -93,7 +93,15 @@ export default class UserTodos extends React.Component {
           },
         })
           .then((response) => response.json())
-          .then((todos)=>this.setState({items:todos}))
+          .then((todos)=>{
+            console.log('todos in componentDidmount: ', todos)
+            let newTodos=todos.map((todo)=>({
+              isUpdated: false,
+              ...todo
+            }))
+            console.log(newTodos, 'new Todos')
+            this.setState({items:newTodos})
+          })
           .then((todos) => console.log(todos, ": todos"))
       })
       .catch((error) => {
@@ -136,11 +144,11 @@ export default class UserTodos extends React.Component {
     //post to add todo route
   }
   setUpdate(text, id) {
-    console.log("items:" + this.state.items);
+    // console.log("items:" + this.state.items);
     const items = this.state.items;
     items.map((item) => {
       if (item.id === id) {
-        console.log(item.id + "    " + id);
+        // console.log(item.id + "    " + id);
         return (item.text = text);
       } else {
         return null;
